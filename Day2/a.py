@@ -1,4 +1,4 @@
-games = open("./input.txt", "r")
+games = open("/home/spy/AoC2022/Day2/input.txt", "r")
 moves = games.readlines()
 
 #A = {"A": "Y", "A": "X", "A": "Z"}  #win, draw, loss
