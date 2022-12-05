@@ -1,9 +1,10 @@
-txt = open("/home/spy/AoC2022/Day3/testinput.txt", "r")
-rucksacks = txt.read().strip()
+txt = open("/home/spy/AoC2022/Day3/input.txt", "r")
+rucksacks = [i for i in txt.read().strip().split("\n")]
 
-def score_calc(dups: str):
+def score_calc(badge):
     total = 0
-    for char in dups:
+
+    for char in badge:
         if char.isupper() == True:
             total += ord(char) - 38
         if char.islower() == True:
@@ -11,16 +12,12 @@ def score_calc(dups: str):
     return total
 
 def duplicates(rucksacks):
-    rucksack = rucksacks.split("\n")
-    
-    start = 0
-    stop = 3
+    ans = 0
 
-    for sets in rucksack:
-        group = rucksack[start:stop]
-        start +=  3
-        stop += 3
-        print(group)
-            
+    for i in range(0, len(rucksacks), 3):
+        group = rucksacks[i:(i+3)]
+        badge = set(group[0]) & set(group[1]) & set(group[2])
+        ans += score_calc(badge)
+    return ans
 
 print(duplicates(rucksacks))

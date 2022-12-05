@@ -3,6 +3,7 @@ rucksacks = txt.readlines()
 
 def score_calc(dups: str):
     total = 0
+
     for char in dups:
         if char.isupper() == True:
             total += ord(char) - 38
@@ -11,7 +12,6 @@ def score_calc(dups: str):
     return total
 
 def duplicates(rucksacks):
-
     items = set()
     dups = set()
     ans = 0
