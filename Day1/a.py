@@ -13,3 +13,15 @@ def max_cals(cals) -> int:
     return current_max
 
 print(max_cals(cals))
+
+''' # 2nd attempt a few days later
+cals = txt.read().strip().split("\n\n")
+def max_cals(cals):    
+    cur_max = 0
+
+    for elves in cals:
+        elf = list(map(int, elves.split("\n")))
+        if sum(elf) > cur_max:
+            cur_max = sum(elf)
+    return cur_max
+'''
