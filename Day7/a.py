@@ -1,22 +1,53 @@
 txt = open("/home/spy/AoC2022/Day7/testinput.txt", "r")
 commands = txt.read().strip().split("\n")
 
-root = {}
-cwd = {}
-stack = []
+from collections import deque, defaultdict
+from functools import lru_cache
 
-for i in range(len(commands)):
-    line = commands[i]
-    print(line)
-    if "$ cd" in line:
-        cd = line.split(" ")[-1]
-        cwd[cd] = {}
+def parse_filesystem(commands):
+	lines = deque(commands)
+	fs    = defaultdict(list)
+	path  = ()
 
-    if "$ ls" in line:
-        continue
-    while "$" not in line:
-        name = line.split(" ")[1]
-        size = line.split(" ")[0]
-        break
+	while lines:
+		_, command, *args = lines.popleft().split()
 
-print(root)
+		if command == 'ls':
+			while lines and not lines[0].startswith('$'):
+				size = lines.popleft().split()[0]
+				if size != 'dir':
+					fs[path].append(int(size))
+		else:
+			if args[0] == '..':
+				path = path[:-1]
+			else:
+				new_path = path + (args[0],)
+				fs[path].append(new_path)
+				path = new_path
+
+	return fs
+
+@lru_cache(maxsize=None)
+def directory_size(path):
+	size = 0
+
+	for subdir_or_size in fs[path]:
+		if isinstance(subdir_or_size, int):
+			size += subdir_or_size
+		else:
+			size += directory_size(subdir_or_size)
+
+	return size
+
+
+fs = parse_filesystem(commands)
+
+small_dir_total  = 0
+
+for path in fs:
+	size = directory_size(path)
+
+	if size <= 100000:
+		small_dir_total += size
+  
+print(small_dir_total)
