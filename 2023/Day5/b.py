@@ -3,20 +3,31 @@ with open("./2023/Day5/input.txt", "r") as f:
 
 import re
 
-seeds = list(map(int, re.findall(r"\d+", lines[0])))
-seeds = list(range(seeds[0], seeds[0] + seeds[1]))
+inputs = list(map(int, re.findall(r"\d+", lines[0])))
+seeds = []
 maps = lines[1:]
-ans = []
 
-for seed in seeds:
-    for m in maps:
-        values = re.findall(r"\d+", m)
+for i in range(0, len(inputs), 2):
+    seeds.append((inputs[i], inputs[i] + inputs[i + 1]))
+
+for m in maps:
+    values = re.findall(r"\d+", m)
+    new = []
+    while len(seeds) > 0:
+        start, end = seeds.pop()
         for i in range(0, len(values), 3):
             drs, srs, rl = int(values[i]), int(values[i + 1]), int(values[i + 2])
-            if srs <= seed < srs + rl:
-                seed = drs + (seed - srs)
+            overlap_start = max(start, srs)
+            overlap_end = min(end, srs + rl)
+            if overlap_start < overlap_end:
+                new.append((overlap_start - srs + drs, overlap_end - srs + drs))
+                if overlap_start > start:
+                    seeds.append((start, overlap_start))
+                if overlap_end < end:
+                    seeds.append((overlap_end, end))
                 break
+        else:
+            new.append((start, end))
+    seeds = new
 
-    ans.append(seed)
-
-print(min(ans))
+print(min(seeds)[0])
