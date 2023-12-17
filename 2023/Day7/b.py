@@ -80,6 +80,7 @@ def order(hands, level):
 
 for i, line in enumerate(lines):
     hand, bid = line.split()
+    # the order will be fixed at the end
     if hand == "JJJJJ":
         hand = "AAAAA"
 
@@ -92,7 +93,7 @@ ans = 0
 for hands in [high_card, one_pair, two_pair, three, full_house, four, five]:
     ranked = order(hands, 0)
     if ranked[-1] == "AAAAA":
-        # move the last in ranked to the start of the array
+        # Put "AAAAA" at the start since it's actually meant to be "JJJJJ"
         ranked = [ranked[-1]] + ranked[:-1]
 
     print(ranked)
