@@ -28,7 +28,10 @@ def rank(hand):
     count = Counter(hand)
 
     if count["J"] > 0:
-        count[count.most_common(1)[0][0]] += count["J"]
+        most = count.most_common(1)[0][0]
+        if most == "J":
+            most = count.most_common(2)[1][0]
+        count[most] += count["J"]
         count.pop("J")
 
     match len(count):
