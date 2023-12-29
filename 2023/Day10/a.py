@@ -54,9 +54,7 @@ def solve(grid, x, y, paths):
         distance += 1
 
         for i, path in enumerate(paths):
-            pipe = path[2]
-            cur_x, cur_y = path[0], path[1]
-            direction = path[3]
+            cur_x, cur_y, pipe, direction = path[0], path[1], path[2], path[3]
             change = pipe_directions[pipe](direction)
             nx, ny = cur_x + change[0], cur_y + change[1]
             # print(direction, (nx, ny, grid[ny][nx], change), past)
