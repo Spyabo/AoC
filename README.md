@@ -20,3 +20,6 @@ python_code="with open('./2023/Day$day/testinput.txt', 'r') as f:\n    lines: st
 echo "$python_code" > "./2023/Day$day/a.py"
 echo "$python_code" > "./2023/Day$day/b.py"
 ```
+
+### Visualisation of 2023 Day 10
+https://github.com/Spyabo/AoC/assets/86006893/2afb8258-587f-46ab-9e55-d0d220d2ef72
