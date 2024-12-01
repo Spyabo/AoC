@@ -1,6 +1,3 @@
-with open('./2021/Day03/testinput.txt', 'r') as f:
-    lines: str = f.read().splitlines()
-
 def solve(lines, bool):
     grid = [[] for x in range(len(lines[0]))]
 
@@ -28,11 +25,27 @@ def solve(lines, bool):
         else:
             ans += res[0]
         
-        print(new_pos)
-    print(grid)
-    print(f"res: {res}")
     return ans
     
-gamma = solve(lines, True)
-epsilon = solve(lines, False)
-print(int(gamma, 2), int(epsilon, 2))
+def main():
+    lines = """00100
+11110
+10110
+10111
+10101
+01111
+00111
+11100
+10000
+11001
+00010
+01010
+""".splitlines()
+    gamma = solve(lines, True)
+    epsilon = solve(lines, False)
+    print(int(gamma, 2), int(epsilon, 2))
+    
+    return (int(gamma, 2), int(epsilon, 2))
+
+if __name__ == "__main__":
+    main()
