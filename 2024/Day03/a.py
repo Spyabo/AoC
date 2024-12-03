@@ -2,7 +2,6 @@ with open('./2024/Day03/input.txt', 'r') as f:
     lines: str = f.read().splitlines()
 
 import re
-from functools import reduce
 
 res = 0
 
