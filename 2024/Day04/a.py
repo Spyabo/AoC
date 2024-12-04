@@ -1,4 +1,4 @@
-with open('./2024/Day04/testinput.txt', 'r') as f:
+with open('./2024/Day04/input.txt', 'r') as f:
     lines: str = f.read().splitlines()
 
 def direction_print(direction):
@@ -6,13 +6,14 @@ def direction_print(direction):
     
     return lookup[direction]
 
-def find_starts(grid):
+def find_starts(lines):
     starts = []
     
-    for i, line in enumerate(grid):
-        if "X" in line:
-            starts.append((line.index("X"), i))
-    
+    for i, line in enumerate(lines):
+        for j, char in enumerate(line):
+            if char == "X":
+                starts.append((j, i))
+        
     return starts
 
 # DFS from the X to check all directions to complete the word "XMAS"
@@ -28,7 +29,7 @@ def valid_xmas(x, y, grid):
         i = 0
         
         while True:
-            if nx < 0 or nx == len(grid) or ny < 0 or ny >= len(grid):
+            if nx < 0 or nx == len(grid) or ny < 0 or ny == len(grid):
                 break
             
             if grid[ny][nx] == chars[i]:
@@ -36,8 +37,7 @@ def valid_xmas(x, y, grid):
                 nx, ny = nx + check[0], ny + check[1]
                 i += 1
             else:
-                nx, ny = nx + check[0], ny + check[1]
-                continue
+                break
             
             if i == len(chars):
                 cur_total += 1
