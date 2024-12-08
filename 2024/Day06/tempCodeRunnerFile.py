@@ -1,1 +1,0 @@
-(gaurd[1], gaurd[2])
