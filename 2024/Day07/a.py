@@ -16,9 +16,6 @@ def generate_equations(operators, numbers):
             if op == "+":
                 # Wrap addition in parentheses
                 expression = f"({expression}+{numbers[i + 1]})"
-            elif op == "||":
-                # Combine the numbers together literally
-                expression = f"{expression}{numbers[i + 1]}"
             else:
                 # No wrapping for multiplication
                 expression = f"{expression}*{numbers[i + 1]}"
@@ -28,13 +25,10 @@ def generate_equations(operators, numbers):
 
 for line in lines:
     target, numbers = int(line.split(": ")[0]), line.split(": ")[1].split(" ")
-    combos = generate_equations(["*", "+", "||"], numbers)
+    combos = generate_equations(["*", "+"], numbers)
 
     for combo in combos:
-        try:
-            cur_total = eval(combo)
-        except:
-            continue
+        cur_total = eval(combo)
         
         if cur_total == target:
             ans += cur_total
