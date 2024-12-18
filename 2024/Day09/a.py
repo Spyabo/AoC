@@ -1,33 +1,29 @@
 with open('./2024/Day09/input.txt', 'r') as f:
     disk: str = f.read().replace("\n", "")
 
-mapping = ""
+mapping = []
 i = 0
 
 for file, free in zip(disk[::2], disk[1::2]):
-    mapping += f"{int(file)*str(i)}{int(free)*"."}"
+    mapping.extend([i] * int(file))  # File IDs
+    mapping.extend([-1] * int(free))  # Blanks
     i += 1
-else:
-    mapping += int(disk[-1])*str(i)
-
-
-# print(mapping)
+    
+if len(disk) % 2 != 0:
+    mapping.extend([i] * int(disk[-1]))
 
 l, r = 0, len(mapping) - 1
-
-while l < r:
-    if mapping[l] != ".":
+while l <= r:
+    if mapping[l] != -1:
         l += 1
         continue
-    
-    # Swich the chars at l and r
-    mapping = mapping[:l] + mapping[r] + mapping[l+1:r] + mapping[l] + mapping[r+1:]
-    # print(mapping)
-    l += 1
-    while mapping[r] == ".":
+    while mapping[r] == -1:
         r -= 1
-    
-# print(mapping)
+    if r < l:
+        break
+    mapping[l] = mapping[r]
+    mapping[r] = -1 
+    l += 1
 
-checksum = sum([int(i)*int(id_num) for i, id_num in enumerate(mapping) if id_num != "."])
+checksum = sum(i * val for i, val in enumerate(mapping) if val != -1)
 print(checksum)
