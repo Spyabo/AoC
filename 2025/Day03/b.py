@@ -1,19 +1,21 @@
-with open('./2025/Day03/testinput.txt', 'r') as f:
+with open('./2025/Day03/input.txt', 'r') as f:
     lines: str = f.read().splitlines()
 
 ans = 0
 
-for line in lines:
-    joltage = max(line[:-11])
-    largest = max(line[:-11])
-    length = 10
-    while len(joltage) < 11:
-        line = line[line.index(largest)+1:]
-        largest = max(line[:-length])
-        joltage += largest
-        length -= 1
+for line_no, line in enumerate(lines):
+    k = 12
+    remove = len(line) - k
+    stack = []
+    for num in line:
+        while remove and stack and stack[-1] < num:
+            stack.pop()
+            remove -= 1
+        stack.append(num)
 
-    joltage += max(line)
-    ans += int(joltage)
+    if remove:
+        stack = stack[:-remove]
+
+    ans += int(''.join(stack[:k]))
 
 print(ans)
